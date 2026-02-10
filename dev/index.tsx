@@ -2,7 +2,10 @@ import React from 'react';
 import { createDevApp } from '@backstage/dev-utils';
 import { catalogGraphExcalidrawPlugin } from '../src/plugin';
 import { ExcalidrawNode, ExcalidrawEdge } from '../src';
-import { DependencyGraph, DependencyGraphTypes } from '@backstage/core-components';
+import {
+  DependencyGraph,
+  DependencyGraphTypes,
+} from '@backstage/core-components';
 
 const sampleNodes: DependencyGraphTypes.DependencyNode<unknown>[] = [
   { id: 'node-a' },

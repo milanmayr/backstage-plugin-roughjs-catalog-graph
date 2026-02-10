@@ -10,8 +10,7 @@ import type { ExcalidrawPalette } from '../theme/excalidrawPalette';
 import { getExcalidrawPalette } from '../theme/excalidrawPalette';
 
 const PADDING = 10;
-const HAND_DRAWN_FONT =
-  '"Virgil", "Comic Sans MS", "Chalkboard SE", cursive';
+const HAND_DRAWN_FONT = '"Virgil", "Comic Sans MS", "Chalkboard SE", cursive';
 const KIND_LABEL_GAP = 9;
 const KIND_FONT_SIZE = 9;
 const ICON_SIZE_SCALE = 0.75;
@@ -20,7 +19,11 @@ const ICON_SIZE_SCALE = 0.75;
  * Display label for a node. Prefers title/name from catalog; otherwise strips
  * the "default" namespace from the entity ref so "component:default/foo" → "component:foo".
  */
-function getNodeLabel(node: { id: string; title?: string; name?: string }): string {
+function getNodeLabel(node: {
+  id: string;
+  title?: string;
+  name?: string;
+}): string {
   const withTitle = node as { title?: string; name?: string };
   if (withTitle.title) return withTitle.title;
   if (withTitle.name) return withTitle.name;
@@ -60,7 +63,7 @@ function getNodeColors(
     grey: { 300: string; 600: string };
   },
   excalidrawPalette: ExcalidrawPalette,
-  color: NodeColor,
+  color: NodeColor
 ): { fill: string; stroke: string } {
   if (isDark) {
     switch (color) {
@@ -74,7 +77,10 @@ function getNodeColors(
   }
   switch (color) {
     case 'primary':
-      return { fill: muiPalette.primary.light, stroke: muiPalette.primary.main };
+      return {
+        fill: muiPalette.primary.light,
+        stroke: muiPalette.primary.main,
+      };
     case 'secondary':
       return {
         fill: muiPalette.secondary.light,
@@ -89,7 +95,7 @@ function getNodeColors(
 }
 
 function ExcalidrawNodeInner(
-  props: DependencyGraphTypes.RenderNodeProps<unknown>,
+  props: DependencyGraphTypes.RenderNodeProps<unknown>
 ): ReactElement {
   const { node } = props;
   const theme = useTheme();
@@ -97,12 +103,9 @@ function ExcalidrawNodeInner(
     type?: 'light' | 'dark';
     mode?: 'light' | 'dark';
   };
-  const isDark =
-    paletteType.type === 'dark' || paletteType.mode === 'dark';
+  const isDark = paletteType.type === 'dark' || paletteType.mode === 'dark';
   const excalidrawPalette = getExcalidrawPalette(isDark);
-  const muiPalette = theme.palette as Parameters<
-    typeof getNodeColors
-  >[1];
+  const muiPalette = theme.palette as Parameters<typeof getNodeColors>[1];
   const containerRef = useRef<SVGGElement>(null);
   const textRef = useRef<SVGTextElement>(null);
   const roughNodeRef = useRef<SVGGElement | null>(null);
@@ -118,16 +121,11 @@ function ExcalidrawNodeInner(
 
   const nodeWithColor = node as { color?: NodeColor };
   const color = nodeWithColor.color ?? 'primary';
-  const colors = getNodeColors(
-    isDark,
-    muiPalette,
-    excalidrawPalette,
-    color,
+  const colors = getNodeColors(isDark, muiPalette, excalidrawPalette, color);
+  const textFill = isDark ? excalidrawPalette.colorOnSurface : '#ffffff';
+  const nodeLabel = getNodeLabel(
+    node as { id: string; title?: string; name?: string }
   );
-  const textFill = isDark
-    ? excalidrawPalette.colorOnSurface
-    : '#ffffff';
-  const nodeLabel = getNodeLabel(node as { id: string; title?: string; name?: string });
   const kindLabel = getNodeKind(node as { id: string; kind?: string });
   const kindTextY = -KIND_LABEL_GAP;
   const kindFill = isDark ? textFill : excalidrawPalette.edgeLabel;
@@ -175,21 +173,15 @@ function ExcalidrawNodeInner(
         roughNodeRef.current = null;
       }
     };
-  }, [
-    node.id,
-    nodeLabel,
-    color,
-    colors.fill,
-    colors.stroke,
-    hasKindIcon,
-  ]);
+  }, [node.id, nodeLabel, color, colors.fill, colors.stroke, hasKindIcon]);
 
-  const nodeWithClick = node as { onClick?: (event: MouseEvent<unknown>) => void };
+  const nodeWithClick = node as {
+    onClick?: (event: MouseEvent<unknown>) => void;
+  };
   const onClick = nodeWithClick.onClick;
 
   const paddedIconWidth = hasKindIcon ? size.iconSize + PADDING : 0;
-  const textX =
-    paddedIconWidth + (size.width - paddedIconWidth) / 2;
+  const textX = paddedIconWidth + (size.width - paddedIconWidth) / 2;
   const iconY = (size.height - size.iconSize) / 2;
 
   return (
@@ -238,10 +230,10 @@ function ExcalidrawNodeInner(
           y={kindTextY}
           textAnchor="middle"
           dominantBaseline="alphabetic"
-style={{
-              fontSize: KIND_FONT_SIZE,
-              fill: kindFill,
-            }}
+          style={{
+            fontSize: KIND_FONT_SIZE,
+            fill: kindFill,
+          }}
         >
           {kindLabel}
         </text>
@@ -255,7 +247,7 @@ style={{
  * as children, so this function must not use hooks or the node's hook count would vary.
  */
 export function ExcalidrawNode(
-  props: DependencyGraphTypes.RenderNodeProps<unknown>,
+  props: DependencyGraphTypes.RenderNodeProps<unknown>
 ): ReactElement {
   return <ExcalidrawNodeInner {...props} />;
 }

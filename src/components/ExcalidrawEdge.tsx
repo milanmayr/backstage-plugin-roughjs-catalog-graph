@@ -10,16 +10,17 @@ const STROKE_WIDTH = 0.75;
 /** Extend path endpoints into the node so the rough stroke visibly meets the node (fixes gap at bottom/sides). */
 const EDGE_ENDPOINT_OVERLAP = 15;
 
-function isFinitePoint(
-  p: { x: number; y: number },
-): p is { x: number; y: number } {
+function isFinitePoint(p: {
+  x: number;
+  y: number;
+}): p is { x: number; y: number } {
   return Number.isFinite(p.x) && Number.isFinite(p.y);
 }
 
 function extendEndpoint(
   from: { x: number; y: number },
   toward: { x: number; y: number },
-  distance: number,
+  distance: number
 ): { x: number; y: number } {
   const dx = toward.x - from.x;
   const dy = toward.y - from.y;
@@ -34,14 +35,16 @@ function extendEndpoint(
 /**
  * Extend first and last points outward so the drawn path overlaps the node and the rough stroke meets the border.
  */
-function extendEdgeEndpoints(points: { x: number; y: number }[]): { x: number; y: number }[] {
+function extendEdgeEndpoints(
+  points: { x: number; y: number }[]
+): { x: number; y: number }[] {
   const finite = points.filter(isFinitePoint);
   if (finite.length < 2) return finite;
   const first = extendEndpoint(finite[1], finite[0], EDGE_ENDPOINT_OVERLAP);
   const last = extendEndpoint(
     finite[finite.length - 2],
     finite[finite.length - 1],
-    EDGE_ENDPOINT_OVERLAP,
+    EDGE_ENDPOINT_OVERLAP
   );
   return [first, ...finite.slice(1, -1), last];
 }
@@ -62,7 +65,7 @@ function buildPathD(points: { x: number; y: number }[]): string {
  * (it does not mount a component), so hooks must run in a real component we return.
  */
 function ExcalidrawEdgeInner(
-  props: DependencyGraphTypes.RenderEdgeProps<unknown>,
+  props: DependencyGraphTypes.RenderEdgeProps<unknown>
 ): ReactElement {
   const { edge } = props;
   const theme = useTheme();
@@ -70,17 +73,13 @@ function ExcalidrawEdgeInner(
     type?: 'light' | 'dark';
     mode?: 'light' | 'dark';
   };
-  const isDark =
-    paletteType.type === 'dark' || paletteType.mode === 'dark';
+  const isDark = paletteType.type === 'dark' || paletteType.mode === 'dark';
   const palette = getExcalidrawPalette(isDark);
   const edgeStroke = isDark ? palette.edgeStroke : '#616161';
   const containerRef = useRef<SVGGElement>(null);
   const roughPathRef = useRef<SVGGElement | null>(null);
 
-  const pathD = useMemo(
-    () => buildPathD(edge.points ?? []),
-    [edge.points],
-  );
+  const pathD = useMemo(() => buildPathD(edge.points ?? []), [edge.points]);
 
   useLayoutEffect(() => {
     const container = containerRef.current;
@@ -95,10 +94,7 @@ function ExcalidrawEdgeInner(
     const svg = container.ownerSVGElement;
     if (!svg) return () => {};
 
-    if (
-      roughPathRef.current &&
-      roughPathRef.current.parentNode === container
-    ) {
+    if (roughPathRef.current && roughPathRef.current.parentNode === container) {
       container.removeChild(roughPathRef.current);
       roughPathRef.current = null;
     }
@@ -132,7 +128,7 @@ function ExcalidrawEdgeInner(
  * so this function must not use hooks or the graph's hook count would change with edge count.
  */
 export function ExcalidrawEdge(
-  props: DependencyGraphTypes.RenderEdgeProps<unknown>,
+  props: DependencyGraphTypes.RenderEdgeProps<unknown>
 ): ReactElement {
   return <ExcalidrawEdgeInner {...props} />;
 }

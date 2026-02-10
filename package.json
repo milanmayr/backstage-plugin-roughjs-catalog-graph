@@ -43,6 +43,8 @@
     "build:types": "tsc --emitDeclarationOnly --declaration --declarationMap --skipLibCheck --outDir dist-types --rootDir . 2>&1 | grep -v 'node_modules/react-markdown' | grep -v 'Cannot find namespace' | grep -v 'Type.*TagName.*does not satisfy' | grep -v 'Type.*string.*is not assignable.*ElementType' | grep -v 'Type.*TagName.*is not assignable.*FunctionComponent' | grep -v 'Type.*string.*is not assignable.*FunctionComponent' || true",
     "tsc": "tsc --noEmit --skipLibCheck 2>&1 | grep -v 'node_modules/react-markdown' | grep -v 'Cannot find namespace' | grep -v 'Type.*TagName.*does not satisfy' | grep -v 'Type.*string.*is not assignable.*ElementType' | grep -v 'Type.*TagName.*is not assignable.*FunctionComponent' | grep -v 'Type.*string.*is not assignable.*FunctionComponent' || true",
     "lint": "backstage-cli package lint",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check .",
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
     "prepack": "yarn build:types && backstage-cli package prepack",
@@ -73,6 +75,7 @@
     "@types/d3-shape": "^3.1.8",
     "@types/react": "^19.2.13",
     "@types/react-dom": "^19.2.3",
+    "prettier": "^3.8.1",
     "react": "^18.0.2",
     "react-dom": "^18.0.2"
   },

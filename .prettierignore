@@ -1,0 +1,12 @@
+# Build outputs
+dist/
+dist-types/
+node_modules/
+
+# Lock files
+yarn.lock
+package-lock.json
+
+# Generated files
+*.d.ts.map
+*.js.map

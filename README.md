@@ -29,7 +29,10 @@ In the file where you render `CatalogGraphPage` (e.g. `packages/app/src/App.tsx`
 
 ```tsx
 import { CatalogGraphPage, Direction } from '@backstage/plugin-catalog-graph';
-import { ExcalidrawNode, ExcalidrawEdge } from '@internal/backstage-plugin-catalog-graph-excalidraw';
+import {
+  ExcalidrawNode,
+  ExcalidrawEdge,
+} from '@internal/backstage-plugin-catalog-graph-excalidraw';
 
 // In your routes:
 <Route
@@ -41,7 +44,7 @@ import { ExcalidrawNode, ExcalidrawEdge } from '@internal/backstage-plugin-catal
       renderEdge={ExcalidrawEdge}
     />
   }
-/>
+/>;
 ```
 
 ### 2. Entity catalog graph cards
@@ -50,7 +53,10 @@ In the file where you use `EntityCatalogGraphCard` (e.g. `packages/app/src/compo
 
 ```tsx
 import { EntityCatalogGraphCard } from '@backstage/plugin-catalog-graph';
-import { ExcalidrawNode, ExcalidrawEdge } from '@internal/backstage-plugin-catalog-graph-excalidraw';
+import {
+  ExcalidrawNode,
+  ExcalidrawEdge,
+} from '@internal/backstage-plugin-catalog-graph-excalidraw';
 
 // For each EntityCatalogGraphCard, add the renderers:
 <EntityCatalogGraphCard
@@ -58,7 +64,7 @@ import { ExcalidrawNode, ExcalidrawEdge } from '@internal/backstage-plugin-catal
   height={400}
   renderNode={ExcalidrawNode}
   renderEdge={ExcalidrawEdge}
-/>
+/>;
 ```
 
 Add `renderNode={ExcalidrawNode}` and `renderEdge={ExcalidrawEdge}` to every `EntityCatalogGraphCard` instance (overview cards, diagram tab, etc.) where you want the Excalidraw style.
@@ -73,7 +79,7 @@ import { excalidrawGraphRenderers } from '@internal/backstage-plugin-catalog-gra
 <CatalogGraphPage
   renderNode={excalidrawGraphRenderers.renderNode}
   renderEdge={excalidrawGraphRenderers.renderEdge}
-/>
+/>;
 ```
 
 ## Layout and spacing
