@@ -5,7 +5,7 @@
     "type": "git",
     "directory": "."
   },
-  "homepage": "https://github.com/internal/backstage-plugin-catalog-graph-excalidraw",
+  "homepage": "https://github.com/milanmayr/backstage-plugin-catalog-graph-excalidraw",
   "keywords": [
     "backstage",
     "plugin",
@@ -14,7 +14,6 @@
     "excalidraw"
   ],
   "license": "Apache-2.0",
-  "private": true,
   "main": "src/index.ts",
   "types": "src/index.ts",
   "publishConfig": {
