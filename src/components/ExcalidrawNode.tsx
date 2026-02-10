@@ -1,4 +1,4 @@
-import type { MouseEvent } from 'react';
+import type { MouseEvent, ReactElement } from 'react';
 import { useRef, useLayoutEffect, useState } from 'react';
 import type { DependencyGraphTypes } from '@backstage/core-components';
 import type { Entity } from '@backstage/catalog-model';
@@ -90,7 +90,7 @@ function getNodeColors(
 
 function ExcalidrawNodeInner(
   props: DependencyGraphTypes.RenderNodeProps<unknown>,
-): JSX.Element {
+): ReactElement {
   const { node } = props;
   const theme = useTheme();
   const paletteType = theme.palette as {
@@ -256,6 +256,6 @@ style={{
  */
 export function ExcalidrawNode(
   props: DependencyGraphTypes.RenderNodeProps<unknown>,
-): JSX.Element {
+): ReactElement {
   return <ExcalidrawNodeInner {...props} />;
 }

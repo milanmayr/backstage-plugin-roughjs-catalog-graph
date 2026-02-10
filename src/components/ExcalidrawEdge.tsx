@@ -51,8 +51,8 @@ function buildPathD(points: { x: number; y: number }[]): string {
   if (extended.length === 0) return '';
   const line = d3Shape
     .line<{ x: number; y: number }>()
-    .x(d => d.x)
-    .y(d => d.y)
+    .x((d: { x: number; y: number }) => d.x)
+    .y((d: { x: number; y: number }) => d.y)
     .curve(d3Shape.curveCatmullRom.alpha(0.5));
   return line(extended) ?? '';
 }
