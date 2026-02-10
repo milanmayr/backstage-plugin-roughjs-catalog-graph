@@ -2,6 +2,8 @@
 
 A frontend-only Backstage plugin that provides Excalidraw-style (hand-drawn, sketchy) node and edge renderers for the [catalog graph](https://backstage.io/docs/features/software-catalog/catalog-graph). Use it with `EntityCatalogGraphCard` and `CatalogGraphPage` from `@backstage/plugin-catalog-graph`.
 
+![Excalidraw-style catalog graph example](docs/assets/plugin-screenshot.png)
+
 ## Installation
 
 Add the plugin to your Backstage app:
