@@ -1,11 +1,11 @@
 {
   "name": "@milanmayr/backstage-plugin-catalog-graph-excalidraw",
-  "version": "0.1.3",
+  "version": "0.1.6",
   "repository": {
     "type": "git",
     "directory": "."
   },
-  "homepage": "https://github.com/milanmayr/backstage-plugin-catalog-graph-excalidraw",
+  "homepage": "https://github.com/milanmayr/backstage-plugin-roughjs-catalog-graph",
   "keywords": [
     "backstage",
     "plugin",
@@ -18,15 +18,14 @@
   "types": "src/index.ts",
   "publishConfig": {
     "access": "public",
-    "main": "dist/index.js",
-    "module": "dist/index.esm.js",
+    "main": "dist/index.esm.js",
     "types": "dist/index.d.ts",
     "exports": {
       ".": {
         "types": "./dist/index.d.ts",
         "import": "./dist/index.esm.js",
-        "require": "./dist/index.js",
-        "default": "./dist/index.js"
+        "require": "./dist/index.esm.js",
+        "default": "./dist/index.esm.js"
       }
     }
   },
@@ -40,12 +39,13 @@
   "sideEffects": false,
   "scripts": {
     "start": "backstage-cli package start",
-    "build": "backstage-cli package build && yarn build:types",
-    "build:types": "tsc --emitDeclarationOnly --declaration --declarationMap --skipLibCheck 2>&1 | grep -v 'node_modules/react-markdown' | grep -v 'Cannot find namespace' | grep -v 'Type.*TagName.*does not satisfy' | grep -v 'Type.*string.*is not assignable.*ElementType' | grep -v 'Type.*TagName.*is not assignable.*FunctionComponent' | grep -v 'Type.*string.*is not assignable.*FunctionComponent' || true",
+    "build": "yarn build:types && backstage-cli package build",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationMap --skipLibCheck --outDir dist-types --rootDir . 2>&1 | grep -v 'node_modules/react-markdown' | grep -v 'Cannot find namespace' | grep -v 'Type.*TagName.*does not satisfy' | grep -v 'Type.*string.*is not assignable.*ElementType' | grep -v 'Type.*TagName.*is not assignable.*FunctionComponent' | grep -v 'Type.*string.*is not assignable.*FunctionComponent' || true",
+    "tsc": "tsc --noEmit --skipLibCheck 2>&1 | grep -v 'node_modules/react-markdown' | grep -v 'Cannot find namespace' | grep -v 'Type.*TagName.*does not satisfy' | grep -v 'Type.*string.*is not assignable.*ElementType' | grep -v 'Type.*TagName.*is not assignable.*FunctionComponent' | grep -v 'Type.*string.*is not assignable.*FunctionComponent' || true",
     "lint": "backstage-cli package lint",
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
-    "prepack": "backstage-cli package prepack && yarn build:types",
+    "prepack": "yarn build:types && backstage-cli package prepack",
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
