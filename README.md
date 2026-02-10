@@ -9,17 +9,9 @@ A frontend-only Backstage plugin that provides Excalidraw-style (hand-drawn, ske
 Add the plugin to your Backstage app:
 
 ```bash
-yarn add @internal/backstage-plugin-catalog-graph-excalidraw
+# From your Backstage root directory
+yarn add --cwd packages/app @milanmayr/backstage-plugin-catalog-graph-excalidraw
 ```
-
-If you use a monorepo with workspaces, add the package to your app's `package.json` dependencies (e.g. `"@internal/backstage-plugin-catalog-graph-excalidraw": "^0.1.0"` or a workspace reference).
-
-The plugin requires:
-
-- `@backstage/plugin-catalog-graph` (you already have this if you show the catalog graph)
-- `@backstage/core-components`
-- `@backstage/theme`
-- `react`
 
 ## Usage
 
@@ -27,7 +19,7 @@ The plugin exports `ExcalidrawNode` and `ExcalidrawEdge` (and a convenience obje
 
 ### 1. Catalog graph page (standalone)
 
-In the file where you render `CatalogGraphPage` (e.g. `packages/app/src/App.tsx`):
+In `packages/app/src/App.tsx`, the file where you render `CatalogGraphPage`:
 
 ```tsx
 import { CatalogGraphPage, Direction } from '@backstage/plugin-catalog-graph';
@@ -51,7 +43,9 @@ import {
 
 ### 2. Entity catalog graph cards
 
-In the file where you use `EntityCatalogGraphCard` (e.g. `packages/app/src/components/catalog/EntityPage.tsx`):
+In `packages/app/src/components/catalog/EntityPage.tsx`, where you use `EntityCatalogGraphCard`.
+
+Add `renderNode={ExcalidrawNode}` and `renderEdge={ExcalidrawEdge}` to every `EntityCatalogGraphCard` instance (overview cards, diagram tab, etc.) where you want the Excalidraw style:
 
 ```tsx
 import { EntityCatalogGraphCard } from '@backstage/plugin-catalog-graph';
@@ -69,8 +63,6 @@ import {
 />;
 ```
 
-Add `renderNode={ExcalidrawNode}` and `renderEdge={ExcalidrawEdge}` to every `EntityCatalogGraphCard` instance (overview cards, diagram tab, etc.) where you want the Excalidraw style.
-
 ### Convenience object
 
 You can use the bundled object to avoid repeating imports:
@@ -83,10 +75,6 @@ import { excalidrawGraphRenderers } from '@internal/backstage-plugin-catalog-gra
   renderEdge={excalidrawGraphRenderers.renderEdge}
 />;
 ```
-
-## Layout and spacing
-
-Node spacing (distance between nodes) is controlled by `@backstage/plugin-catalog-graph` and its layout defaults. The plugin does not currently expose `nodeMargin` or `rankMargin` to `DependencyGraph`. To get more space between nodes, you would need the upstream catalog-graph plugin to support and forward those props, or to use a custom graph wrapper that does.
 
 ## Development
 
