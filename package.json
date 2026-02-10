@@ -1,6 +1,6 @@
 {
   "name": "@milanmayr/backstage-plugin-catalog-graph-excalidraw",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "repository": {
     "type": "git",
     "directory": "."
@@ -40,11 +40,12 @@
   "sideEffects": false,
   "scripts": {
     "start": "backstage-cli package start",
-    "build": "backstage-cli package build",
+    "build": "backstage-cli package build && yarn build:types",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationMap --skipLibCheck || true",
     "lint": "backstage-cli package lint",
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
-    "prepack": "backstage-cli package prepack",
+    "prepack": "backstage-cli package prepack && yarn build:types",
     "postpack": "backstage-cli package postpack"
   },
   "dependencies": {
