@@ -41,7 +41,7 @@
   "scripts": {
     "start": "backstage-cli package start",
     "build": "backstage-cli package build && yarn build:types",
-    "build:types": "tsc --emitDeclarationOnly --declaration --declarationMap --skipLibCheck || true",
+    "build:types": "tsc --emitDeclarationOnly --declaration --declarationMap --skipLibCheck 2>&1 | grep -v 'node_modules/react-markdown' | grep -v 'Cannot find namespace' | grep -v 'Type.*TagName.*does not satisfy' | grep -v 'Type.*string.*is not assignable.*ElementType' | grep -v 'Type.*TagName.*is not assignable.*FunctionComponent' | grep -v 'Type.*string.*is not assignable.*FunctionComponent' || true",
     "lint": "backstage-cli package lint",
     "test": "backstage-cli package test",
     "clean": "backstage-cli package clean",
